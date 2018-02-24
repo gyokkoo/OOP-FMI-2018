@@ -85,7 +85,7 @@ int main()
 	cout << "TextA: " << textA << "\n";
 	cout << "TextB: " << textB << "\n";
 	myStrcopy(textA, textB);
-    	cout << "After strcopy(textA, textB): " << textA << "\n";
+    cout << "After strcopy(textA, textB): " << textA << "\n";
 	assert(myStrlen(textA) == 4);
 	assert(myStrcmp(textA, textB) == 0);
 
@@ -99,4 +99,5 @@ int main()
 	assert(myStrcmp("ab", "ab") == 0);
 	
 	system("pause");
+	return 0;
 }

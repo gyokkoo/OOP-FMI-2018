@@ -62,4 +62,5 @@ int main()
 	print(a, b);
 
 	system("pause");
+	return 0;
 }

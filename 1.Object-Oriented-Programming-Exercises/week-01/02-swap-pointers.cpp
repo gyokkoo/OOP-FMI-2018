@@ -58,4 +58,5 @@ int main()
 	assert(b == secondValue);
 
 	system("pause");
+	return 0;
 }
