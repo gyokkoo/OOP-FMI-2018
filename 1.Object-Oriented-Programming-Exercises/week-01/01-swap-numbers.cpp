@@ -20,7 +20,7 @@ void swapViaReference(int& a, int& b)
 	a = a + b;
 	b = a - b;
 	a = a - b;
-	
+
 	// Geek way: XOR Algorithm
 	/*
 	a = a ^ b;
@@ -61,6 +61,5 @@ int main()
 	assert(b == secondValue);
 	print(a, b);
 
-	system("pause");
 	return 0;
 }

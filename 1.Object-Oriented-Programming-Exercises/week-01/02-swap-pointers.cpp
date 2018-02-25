@@ -15,7 +15,7 @@
 #include <iostream>
 #include <assert.h>
 
-void swap(int*& a, int*& b)
+void swapPointers(int*& a, int*& b)
 {
 	int *temp = a;
 	a = b;
@@ -29,6 +29,7 @@ void print(int a, int b)
 
 void printPointers(int* pa, int* pb)
 {
+    // Prints pointer in the console
 	std::cout << "pa = " << static_cast<void*>(pa) << "\n";
 	std::cout << "pb = " << static_cast<void*>(pb) << "\n";
 }
@@ -48,7 +49,7 @@ int main()
 	print(a, b);
 	printPointers(pa, pb);
 
-	swap(pa, pb);
+	swapPointers(pa, pb);
 	std::cout << "After swapping: \n";
 	print(a, b);
 	printPointers(pa, pb);
@@ -57,6 +58,5 @@ int main()
 	assert(a == firstValue);
 	assert(b == secondValue);
 
-	system("pause");
 	return 0;
 }

@@ -44,6 +44,5 @@ int main()
 	delete[] arr;
 	std::cout << "Done! \n";
 
-	system("pause");
 	return 0;
 }

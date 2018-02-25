@@ -14,9 +14,14 @@
 
 #include <iostream>
 
-size_t myStrLen(const char* str)
+int myStrLen(const char* str)
 {
-	size_t index = 0;
+    if (str == nullptr)
+    {
+        return -1;
+    }
+
+	int index = 0;
 	while (str[index])
 	{
 		index++;
@@ -27,8 +32,13 @@ size_t myStrLen(const char* str)
 
 bool doExist(const char* str, const char* subStr)
 {
-	size_t strLength = myStrLen(str);
-	size_t subStrLength = myStrLen(subStr);
+    if (str == nullptr || subStr == nullptr)
+    {
+        return false;
+    }
+
+	int strLength = myStrLen(str);
+	int subStrLength = myStrLen(subStr);
 	bool doSubStrExists;
 	int index = 0;
 
@@ -62,12 +72,11 @@ int main()
 {
 	char text[100] = "Hello OOP world!";
 	char word[100] = "OOP";
-	
+
 	std::cout << doExist(text, word) << "\n";
 	std::cout << doExist("A", "B") << "\n";
 	std::cout << doExist("Hello", "eo") << "\n";
 	std::cout << doExist("Hello", "Hello") << "\n";
 
-	system("pause");
 	return 0;
 }

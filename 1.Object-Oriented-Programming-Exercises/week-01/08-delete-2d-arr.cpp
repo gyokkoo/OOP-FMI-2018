@@ -45,6 +45,5 @@ int main()
 
 	deleteArr(arr, n);
 
-	system("pause");
 	return 0;
 }

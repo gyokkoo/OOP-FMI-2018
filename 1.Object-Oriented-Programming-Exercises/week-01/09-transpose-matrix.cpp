@@ -13,8 +13,6 @@
 */
 
 #include <iostream>
-using std::cin;
-using std::cout;
 
 const int MAX_LENGTH = 100;
 
@@ -51,9 +49,9 @@ void printMatrix(int** arr, int n, int m)
 	{
 		for (int j = 0; j < m; j++)
 		{
-			cout << arr[i][j] << " ";
+			std::cout << arr[i][j] << " ";
 		}
-		cout << "\n";
+		std::cout << "\n";
 	}
 }
 
@@ -82,7 +80,6 @@ int main()
 
 	deleteArr(matrix, n);
 	deleteArr(transposedMatrix, m);
-	
-	system("pause");
+
 	return 0;
 }

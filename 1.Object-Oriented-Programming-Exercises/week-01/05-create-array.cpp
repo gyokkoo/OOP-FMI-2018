@@ -39,7 +39,6 @@ int main()
 	std::cout << "Cleaning up memory...\n";
 	delete[] arr;
 	std::cout << "Done! \n";
-	
-	system("pause");
+
 	return 0;
 }
