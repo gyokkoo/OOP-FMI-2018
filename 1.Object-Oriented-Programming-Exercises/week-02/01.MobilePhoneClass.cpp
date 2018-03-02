@@ -23,7 +23,7 @@ public:
 	{
 		std::cout
 			<< "--Battery:\n"
-			<< "----Model: " << model << "\n"
+			<< "----Model " << model << "\n"
 			<< "----Use time: " << useTime << " hours \n";
 	}
 };
@@ -90,7 +90,6 @@ public:
 	}
 };
 
-
 int main()
 {
 	MobilePhone defaultPhone;
@@ -100,8 +99,13 @@ int main()
 		"Galaxy S8", "Samsung", 1200, "EB-L1G6LLUCSTD", 52, 5.8, 160000000);
 	samsungPhone.print();
 
-	MobilePhone iphone(
+	MobilePhone iPhone(
 		"iPhone 7", "Apple", 1000, "Non-removable Li-Ion 1960 mAh battery", 61, 4.9, 320000000);
-	iphone.print();
+	iPhone.print();
 
+	MobilePhone nokiaTuhla(
+		"3310", "Nokia", 99.99, "Removable Li-Ion 1200 mAh battery", 744, 2.4, 1600000);
+	nokiaTuhla.print();
+
+	return 0;
 }
