@@ -14,9 +14,9 @@ public:
 
 	void setGrade(int grade);
 
-	void setSubject(const char* subject);
-
 	int getGrade() const;
+	
+	void setSubject(const char* subject);
 
 	const char* getSubject() const;
 

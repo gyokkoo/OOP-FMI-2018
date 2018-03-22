@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Grade.h"
+#include "Student.h"
 
 int main()
 {
@@ -9,6 +10,11 @@ int main()
 	initialGrade.print();
 	grade.print();
 
+	Student initialStudent;
+	Student ivancho(62193, "Ivan Ivanov", 10);
+	
+	initialStudent.print();
+	ivancho.print();
 
 	return 0;
 }
