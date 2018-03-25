@@ -60,19 +60,16 @@ int Student::getGradesCount() const
 void Student::addGrade(Grade g)
 {
 	if (gradesCount >= maxGradesCount) {
-		// TODO: Resize grades array
-		// Issue: throws exception when delete[] this->grades
-
-		/*
-		this->maxGradesCount = this->maxGradesCount * 2;
-		Grade* newGrades = new Grade[this->maxGradesCount];
-		for (int i = 0; i < gradesCount; i++) {
-			newGrades[i] = this->grades[i];
+		// Resize grades array with x2 more length
+		Grade* temp = this->grades;
+		this->grades = new Grade[this->maxGradesCount * 2];
+		for (int i = 0; i < this->gradesCount; i++) 
+		{
+			this->grades[i] = temp[i];
 		}
-		delete[] this->grades;
-		this->grades = newGrades;
-		std::cout << "Grades resized!" << this->gradesCount << "\n";
-		*/
+		this->maxGradesCount *= 2;
+		delete[] temp;
+		std::cout << "*Info: -> Grades resized! New max grades count: " << this->maxGradesCount << "\n";
 	}
 	this->grades[gradesCount] = g;
 	gradesCount++;
@@ -137,5 +134,4 @@ void Student::printAll() const
 {
 	this->print();
 	this->printGrades();
-	std::cout << "-------> Average mark: " << this->getAverage() << "\n";
 }
