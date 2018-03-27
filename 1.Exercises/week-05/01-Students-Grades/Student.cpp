@@ -1,6 +1,6 @@
-#include "Student.h"
 #include <string.h>
 #include <iostream>
+#include "Student.h"
 
 Student::Student() : fn(0), grades(nullptr), maxGradesCount(0), gradesCount(0)
 {

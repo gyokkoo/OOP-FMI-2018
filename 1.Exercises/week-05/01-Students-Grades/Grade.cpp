@@ -1,5 +1,6 @@
-#include "Grade.h"
 #include <iostream>
+#include <string.h>
+#include "Grade.h"
 
 Grade::Grade() : grade(0)
 {
