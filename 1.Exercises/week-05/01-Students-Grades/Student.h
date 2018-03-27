@@ -15,31 +15,23 @@ public:
 
 	// Constructor with parameters
 	Student(int fn, const char* name, int gradesCount);
-
+	
 	// Destructor
 	~Student();
 
 	void setFn(int fn);
-
-	int getFn() const;
-
 	void setName(const char*);
-
+	
+	int getFn() const;
 	const char* getName() const;
-
 	int getMaxGradesCount() const;
-
 	int getGradesCount() const;
 
 	void addGrade(Grade g);
-
 	double getAverage() const;
-
 	double getAverage(const char* subject) const;
 
 	void print() const;
-
 	void printGrades() const;
-
 	void printAll() const;
 };
