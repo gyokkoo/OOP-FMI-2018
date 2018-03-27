@@ -2,17 +2,17 @@
 
 const int INITIAL_CAPACITY = 2;
 
-class List
+class DynamicArray
 {
 private:
 	int size;
 	int capacity;
 	int* arr;
 public:
-	List();
-	List(int capacity);
-	List(const List& list);
-	~List();
+	DynamicArray();
+	DynamicArray(int capacity);
+	DynamicArray(const DynamicArray& dynamicArray);
+	~DynamicArray();
 
 	void resize(int s);
 	void insertAt(int i, int value);

@@ -1,79 +1,79 @@
 #include <iostream>
 #include <assert.h>
-#include "List.h"
+#include "DynamicArray.h"
 
 const int COUNT = 16;
 
 int main()
 {
-	// Testing the correctness of List.cpp class
-	List myList;
+	// Testing the correctness of DynamicArray.cpp class
+	DynamicArray dynamicArray;
 	
-	assert(myList.isEmpty());
-	assert(myList.getCapacity() == INITIAL_CAPACITY);
-	assert(myList.getSize() == 0);
+	assert(dynamicArray.isEmpty());
+	assert(dynamicArray.getCapacity() == INITIAL_CAPACITY);
+	assert(dynamicArray.getSize() == 0);
 
 	for (int i = 1; i <= COUNT; i++)
 	{
 		std::cout << "Added element: " << i << "\n";
-		myList.pushBack(i);
-		assert(myList.getAt(i - 1) == i);
+		dynamicArray.pushBack(i);
+		assert(dynamicArray.getAt(i - 1) == i);
 	}
 
-	assert(myList.getSize() == COUNT);
+	assert(dynamicArray.getSize() == COUNT);
 
-	myList.print();
+	dynamicArray.print();
 
 	std::cout << "Insert at index [1] value 5: \n";
-	myList.insertAt(1, 5);
-	myList.print();
+	dynamicArray.insertAt(1, 5);
+	dynamicArray.print();
 
 	std::cout << "Insert at last Index value 5: \n";
-	myList.insertAt(myList.getSize() - 1, 5);
-	myList.print();
+	dynamicArray.insertAt(dynamicArray.getSize() - 1, 5);
+	dynamicArray.print();
 
 	std::cout << "Removed first index:\n";
-	myList.removeAt(0);
-	myList.print();
+	dynamicArray.removeAt(0);
+	dynamicArray.print();
 
 	std::cout << "Removed last index:\n";
-	myList.removeAt(myList.getSize() - 1);
-	myList.print();
+	dynamicArray.removeAt(dynamicArray.getSize() - 1);
+	dynamicArray.print();
 
 	std::cout << "PopBack last element:\n";
-	myList.popBack();
-	myList.print();
+	dynamicArray.popBack();
+	dynamicArray.print();
 
 	std::cout << "Clear array:\n";
-	myList.clear();
-	myList.print();
-	assert(myList.isEmpty());
-	assert(myList.getCapacity() == INITIAL_CAPACITY);
-	assert(myList.getSize() == 0);
+	dynamicArray.clear();
+	dynamicArray.print();
+	assert(dynamicArray.isEmpty());
+	assert(dynamicArray.getCapacity() == INITIAL_CAPACITY);
+	assert(dynamicArray.getSize() == 0);
 
 	int capacity = 10;
-	List customList(capacity);
-	assert(customList.isEmpty());
-	assert(customList.getCapacity() == capacity);
-	assert(customList.getSize() == 0);
+	DynamicArray customArr(capacity);
+	assert(customArr.isEmpty());
+	assert(customArr.getCapacity() == capacity);
+	assert(customArr.getSize() == 0);
 
 	int newCapacity = 100;
-	customList.resize(newCapacity);
-	assert(customList.getCapacity() == newCapacity);
+	customArr.resize(newCapacity);
+	assert(customArr.getCapacity() == newCapacity);
 
 	newCapacity = 1;
-	customList.resize(newCapacity);
-	assert(customList.getCapacity() == newCapacity);
+	customArr.resize(newCapacity);
+	assert(customArr.getCapacity() == newCapacity);
 
-	customList.pushBack(1);
-	customList.pushBack(11);
-	customList.pushBack(111);
-	customList.print();
+	customArr.pushBack(1);
+	customArr.pushBack(11);
+	customArr.pushBack(111);
+	customArr.print();
 
-	std::cout << "Copy list: \n";
-	List copyList(customList);
-	copyList.print();
-	assert(!copyList.isEmpty());
+	std::cout << "Copy array: \n";
+	DynamicArray copyArray(customArr);
+	copyArray.print();
+	assert(!copyArray.isEmpty());
 
 	return 0;
 }

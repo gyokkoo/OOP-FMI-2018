@@ -1,34 +1,34 @@
 #include <iostream>
-#include "List.h"
+#include "DynamicArray.h"
 
-List::List() : size(0), capacity(INITIAL_CAPACITY)
+DynamicArray::DynamicArray() : size(0), capacity(INITIAL_CAPACITY)
 {
 	this->arr = new int[INITIAL_CAPACITY];
 }
 
-List::List(int capacity) : size(0)
+DynamicArray::DynamicArray(int capacity) : size(0)
 {
 	this->capacity = capacity;
 	this->arr = new int[capacity];
 }
 
-List::List(const List& list)
+DynamicArray::DynamicArray(const DynamicArray& dynamicArray)
 {
-	this->size = list.size;
-	this->capacity = list.capacity;
-	this->arr = new int[list.capacity];
+	this->size = dynamicArray.size;
+	this->capacity = dynamicArray.capacity;
+	this->arr = new int[dynamicArray.capacity];
 	for (int i = 0; i < this->size; i++)
 	{
-		this->arr[i] = list.arr[i];
+		this->arr[i] = dynamicArray.arr[i];
 	}
 }
 
-List::~List()
+DynamicArray::~DynamicArray()
 {
 	delete[] this->arr;
 }
 
-void List::resize(int capacity)
+void DynamicArray::resize(int capacity)
 {
 	if (capacity < 0)
 	{
@@ -56,7 +56,7 @@ void List::resize(int capacity)
 	std::cout << "Array was resized, new capacity: " << this->capacity << "\n";
 }
 
-void List::insertAt(int i, int value)
+void DynamicArray::insertAt(int i, int value)
 {
 	if (i < 0 || i >= this->size)
 	{
@@ -74,7 +74,7 @@ void List::insertAt(int i, int value)
 	this->arr[i] = value;
 }
 
-void List::pushBack(int value)
+void DynamicArray::pushBack(int value)
 {
 	if (this->size >= this->capacity)
 	{
@@ -85,7 +85,7 @@ void List::pushBack(int value)
 	this->arr[this->size - 1] = value;
 }
 
-int List::popBack()
+int DynamicArray::popBack()
 {
 	if (this->size <= 0)
 	{
@@ -93,11 +93,12 @@ int List::popBack()
 		return -1;
 	}
 
+	int elementToRemove = this->arr[this->size - 1];
 	this->size--;
-	return this->arr[this->size - 1];
+	return elementToRemove;
 }
 
-void List::removeAt(int i)
+void DynamicArray::removeAt(int i)
 {
 	if (i < 0 || i >= this->size)
 	{
@@ -109,7 +110,7 @@ void List::removeAt(int i)
 	this->size--;
 }
 
-void List::clear()
+void DynamicArray::clear()
 {
 	delete[] this->arr;
 	this->arr = nullptr;
@@ -118,12 +119,12 @@ void List::clear()
 	std::cout << "Array cleared!\n";
 }
 
-bool List::isEmpty() const
+bool DynamicArray::isEmpty() const
 {
 	return this->size == 0;
 }
 
-int List::getAt(int i) const
+int DynamicArray::getAt(int i) const
 {
 	if (i < 0 || i >= this->size)
 	{
@@ -134,17 +135,17 @@ int List::getAt(int i) const
 	return this->arr[i];
 }
 
-int List::getCapacity() const
+int DynamicArray::getCapacity() const
 {
 	return this->capacity;
 }
 
-int List::getSize() const
+int DynamicArray::getSize() const
 {
 	return this->size;
 }
 
-void List::print() const
+void DynamicArray::print() const
 {
 	for (int i = 0; i < this->size; i++)
 	{
@@ -154,7 +155,7 @@ void List::print() const
 }
 
 // Shift the array with one position left from given index
-void List::shiftLeft(int index)
+void DynamicArray::shiftLeft(int index)
 {
 	if (index < 0 || index >= this->size)
 	{
@@ -173,7 +174,7 @@ void List::shiftLeft(int index)
 }
 
 // Shift the array with one position right from given index
-void List::shiftRight(int index)
+void DynamicArray::shiftRight(int index)
 {
 	if (index < 0 || index >= this->size)
 	{
