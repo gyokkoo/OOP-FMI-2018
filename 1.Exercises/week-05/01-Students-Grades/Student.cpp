@@ -59,7 +59,8 @@ int Student::getGradesCount() const
 
 void Student::addGrade(Grade g)
 {
-	if (gradesCount >= maxGradesCount) {
+	if (gradesCount >= maxGradesCount)
+	{
 		// Resize grades array with x2 more length
 		Grade* temp = this->grades;
 		this->grades = new Grade[this->maxGradesCount * 2];
