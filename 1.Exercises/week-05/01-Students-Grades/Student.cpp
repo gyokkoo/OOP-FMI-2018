@@ -120,11 +120,13 @@ void Student::print() const
 void Student::printGrades() const
 {
 	std::cout << "--Marks:\n";
-	if (this->gradesCount == 0) {
+	if (this->gradesCount == 0)
+	{
 		std::cout << "No marks! \n";
 	}
 
-	for (int i = 0; i < this->gradesCount; i++) {
+	for (int i = 0; i < this->gradesCount; i++)
+	{
 		std::cout << "---->";
 		this->grades[i].print();
 	}
