@@ -26,6 +26,21 @@ Sensor::~Sensor()
 	delete[] this->description;
 }
 
+Sensor & Sensor::operator=(const Sensor& s)
+{
+	if (this != &s)
+	{
+		this->id = s.id;
+		this->temperature = s.temperature;
+
+		int length = strlen(s.getDescription());
+		this->description = new char[length + 1];
+		strcpy_s(this->description, length + 1, s.getDescription());
+	}
+
+	return *this;
+}
+
 int Sensor::getId() const
 {
 	return this->id;

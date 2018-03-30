@@ -8,6 +8,8 @@ public:
 	Sensor(const Sensor& sensor);
 	~Sensor();
 
+	Sensor & operator=(const Sensor& s); //assignment operator
+
 	int getId() const;
 	double getTemperature() const;
 	const char* getDescription() const;
