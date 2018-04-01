@@ -1,58 +1,61 @@
 #include <iostream>
 #include "Vector.h"
 
-Vector operator-(const Vector& a, const Vector& b)
-{
-	Vector result;
-	result.setX(a.getX() - b.getX());
-	result.setY(a.getY() - b.getY());
-	result.setZ(a.getZ() - b.getZ());
-
-	return result;
-}
-
-Vector operator*(const Vector& a, const Vector& b)
-{
-	Vector result;
-	// Todo: Apply the formula
-	return result;
-}
-
 std::istream& operator>>(std::istream & is, Vector& v)
 {
-	double t;
-	is >> t;
-	v.setX(t);
-	is >> t;
-	v.setY(t);
-	is >> t;	
-	v.setZ(t);
+	double temp;
+	std::cout << "Enter X = ";
+	is >> temp;
+	v.setX(temp);
+	std::cout << "Enter Y = ";
+	is >> temp;
+	v.setY(temp);
+	std::cout << "Enter Z = ";
+	is >> temp;	
+	v.setZ(temp);
 	return is;
 }
 
 std::ostream& operator<<(std::ostream& os, const Vector& v)
 {
-	os << v.getX() << " " << v.getY() << " " << v.getZ();
+	os << "{" << v.getX() << ", " << v.getY() << ", " << v.getZ() << " }";
 	return os;
 }
+
+Vector operator*(double lambda, const Vector& v)
+{
+	Vector result;
+	result.setX(lambda * v.getX());
+	result.setY(lambda * v.getY());
+	result.setZ(lambda * v.getZ());
+	return result;
+}
+
 
 int main()
 {
 	Vector f;
-	Vector a(1);
 	Vector b(1, 2);
+	Vector a(1);
 	Vector c(1, 2, 3);
-		
-	// a.print();
-	// b.print();
-	// c.print();
-
-	Vector m = a + b + c;
-	Vector n = a - b - c;
-	// m.print();
-	// n.print();
-
+	std::cout << "Enter vector:\n";
 	std::cin >> f;
-	std::cout << f << "\n";
+	std::cout << "Input vector = " << f << "\n";
+
+	std::cout << "-------------------------\n";
+	std::cout << "Vector a = " << a << "\n";
+	std::cout << "Vector b = " << b << "\n";
+	std::cout << "Vector c = " << c << "\n";
+	
+	std::cout << "Vector a + b + c = " << a + b + c << "\n";
+	std::cout << "Vector a - b - c = " << a - b - c << "\n";
+	std::cout << "Vector c * 5 = " << c * 5 << "\n";
+	std::cout << "Vector -5 * c = " << 5 * c << "\n";
+
+	std::cout << "Number b*c = " << b*c << "\n";
+
+	Vector m = b ^ c;
+	std::cout << "Vector b^c = " << m << "\n";
+	// std::cout << "Vector b^c = " << b ^ c << "\n";
 	return 0;
 }
