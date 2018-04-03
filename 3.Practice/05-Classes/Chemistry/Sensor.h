@@ -4,7 +4,7 @@ class Sensor
 {
 public:
 	Sensor();
-	Sensor(int id, const char* description);
+	Sensor(const char* description);
 	Sensor(const Sensor& sensor);
 	~Sensor();
 
@@ -14,7 +14,6 @@ public:
 	double getTemperature() const;
 	const char* getDescription() const;
 
-	void setId(int id);
 	void setTemperature(double temperature);
 	void setDescription(const char* description);
 private:

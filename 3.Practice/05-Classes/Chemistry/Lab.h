@@ -10,6 +10,8 @@ public:
 	Lab();
 	Lab(const char* name);
 	Lab(const Lab& lab);
+	Lab & operator=(const Lab& other);
+
 	~Lab();
 
 	void addSensor(const Sensor& sensor);
@@ -19,7 +21,7 @@ public:
 
 	double getAverageTemperature() const;
 private:
-	char name[MAX_NAME_SIZE];
+	char* name;
 	int count;
 	int capacity;
 	Sensor* sensors;

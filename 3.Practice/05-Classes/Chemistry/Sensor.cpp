@@ -2,21 +2,21 @@
 #include <string.h>
 #include "Sensor.h"
 
+static unsigned int ID = 0;
+
 Sensor::Sensor() : 
-	id(0), temperature(0), description(nullptr)
+	id(ID++), temperature(0), description(nullptr)
 {
 }
 
-Sensor::Sensor(int id, const char* description) :
-	temperature(0)
+Sensor::Sensor(const char* description) : id(ID++), temperature(0)
 {
-	this->setId(id);
 	this->setDescription(description);
 }
 
 Sensor::Sensor(const Sensor & sensor)
 {
-	this->setId(sensor.id);
+	this->id = sensor.id;
 	this->setTemperature(sensor.temperature);
 	this->setDescription(sensor.description);
 }
@@ -60,17 +60,6 @@ const char * Sensor::getDescription() const
 	}
 
 	return this->description;
-}
-
-void Sensor::setId(int id)
-{
-	if (id < 0)
-	{
-		std::cout << "Invalid ID provided!\n";
-		return;
-	}
-
-	this->id = id;
 }
 
 void Sensor::setTemperature(double temperature)
