@@ -19,7 +19,11 @@ Vector::Vector(double * coordinates, int dimension)
 Vector::Vector(const Vector & other)
 {
 	this->dimension = other.dimension;
-	this->setCoordinates(other.coordinates);
+	this->coordinates = new double[this->dimension];
+	for (int i = 0; i < this->dimension; i++)
+	{
+		this->coordinates[i] = other.coordinates[i];
+	}
 }
 
 Vector::~Vector()
@@ -84,8 +88,6 @@ Vector Vector::operator*(double lambda)
 	return result;
 }
 
-
-
 double * Vector::getCoordinates() const
 {
 	return this->coordinates;
@@ -98,7 +100,7 @@ int Vector::getDimension() const
 
 void Vector::setCoordinates(double * vectors)
 {
-	// delete[] this->coordinates;
+	delete[] this->coordinates;
 	this->coordinates = new double[this->dimension];
 	for (int i = 0; i < this->dimension; i++)
 	{
