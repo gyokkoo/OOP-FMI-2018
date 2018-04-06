@@ -1,18 +1,18 @@
 #include <iostream>
 #include "Matrix.h"
 
-int** createMatrix(int n)
+double** createMatrix(int n)
 {
-	int** matrix = new int*[n];
+	double** matrix = new double*[n];
 	for (int i = 0; i < n; i++)
 	{
-		matrix[i] = new int[n];
+		matrix[i] = new double[n];
 	}
 
 	return matrix;
 }
 
-void deleteMatrix(int** arr, int n)
+void deleteMatrix(double** arr, int n)
 {
 	std::cout << "Cleaning up memory... ";
 	for (int i = 0; i < n; i++)
@@ -21,18 +21,6 @@ void deleteMatrix(int** arr, int n)
 	}
 	delete[] arr;
 	std::cout << "Done!\n";
-}
-
-void printMatrix(double** arr, int n)
-{
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < n; j++)
-		{
-			std::cout << "  " << arr[i][j];
-		}
-		std::cout << "\n";
-	}
 }
 
 int main()
@@ -46,8 +34,8 @@ int main()
 	// int size = 6;
 	int size = 3;
 	int counter = 1;
-	int** matrixA = createMatrix(size);
-	int** matrixB = createMatrix(size);
+	double** matrixA = createMatrix(size);
+	double** matrixB = createMatrix(size);
 
 	for (int i = 0; i < size; i++)
 	{
@@ -74,7 +62,7 @@ int main()
 	std::cout << "a * b = \n" << aMultiplyB;
 
 	int simpleMatrixSize = 2;
-	int** simpleMatrix = createMatrix(simpleMatrixSize);
+	double** simpleMatrix = createMatrix(simpleMatrixSize);
 	simpleMatrix[0][0] = 4;
 	simpleMatrix[0][1] = 3;
 	simpleMatrix[1][0] = 3;
@@ -83,13 +71,12 @@ int main()
 	Matrix matrixC(simpleMatrix, simpleMatrixSize);
 	std::cout << "Matrix C = \n" << matrixC;
 	
-	int determinant = *matrixC;
-	std::cout << "Determinant = " << determinant << "\n";
+	double determinant = *matrixC;
+	std::cout << "Determinant of matrix C = " << determinant << "\n";
 	
-	double** inverse = !matrixC;
-	std::cout << "Inverse matrix of matrix C:\n";
-	printMatrix(inverse, 2);
-
+	Matrix inverse = !matrixC;
+	std::cout << "Inverse matrix of matrix C:\n" << inverse;
+	
 	deleteMatrix(matrixA, size);
 	deleteMatrix(matrixB, size);
 	deleteMatrix(simpleMatrix, simpleMatrixSize);

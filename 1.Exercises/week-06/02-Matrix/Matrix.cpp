@@ -7,11 +7,17 @@ Matrix::Matrix() : matrixArr(nullptr), size(DEFAULT_SIZE)
 {
 }
 
-Matrix::Matrix(int** matrix, int size)
+Matrix::Matrix(int size) : matrixArr(nullptr)
+{
+	this->size = size;
+}
+
+Matrix::Matrix(double** matrix, int size)
 {
 	this->size = size;
 	this->setMatrix(matrix);
 }
+
 
 Matrix::Matrix(const Matrix & other)
 {
@@ -31,13 +37,13 @@ Matrix::~Matrix()
 	deleteMatrix(this->matrixArr, this->size);
 }
 
-void Matrix::setMatrix(int ** matrix)
+void Matrix::setMatrix(double ** matrix)
 {
 	this->deleteMatrix(this->matrixArr, this->size);
-	this->matrixArr = new int*[this->size];
+	this->matrixArr = new double*[this->size];
 	for (int row = 0; row < this->size; row++)
 	{
-		this->matrixArr[row] = new int[this->size];
+		this->matrixArr[row] = new double[this->size];
 		for (int col = 0; col < this->size; col++)
 		{
 			this->matrixArr[row][col] = matrix[row][col];
@@ -53,10 +59,10 @@ Matrix Matrix::operator+(const Matrix& matrix)
 		assert(this->size == matrix.getSize());
 	}
 
-	int** matrixArr = new int*[this->size];
+	double** matrixArr = new double*[this->size];
 	for (int row = 0; row < this->size; row++)
 	{
-		matrixArr[row] = new int[this->size];
+		matrixArr[row] = new double[this->size];
 		for (int col = 0; col < this->size; col++)
 		{
 			matrixArr[row][col] = this->matrixArr[row][col] + matrix.matrixArr[row][col];
@@ -76,10 +82,10 @@ Matrix Matrix::operator-(const Matrix& matrix)
 		assert(this->size == matrix.getSize());
 	}
 
-	int** matrixArr = new int*[this->size];
+	double** matrixArr = new double*[this->size];
 	for (int row = 0; row < this->size; row++)
 	{
-		matrixArr[row] = new int[this->size];
+		matrixArr[row] = new double[this->size];
 		for (int col = 0; col < this->size; col++)
 		{
 			matrixArr[row][col] = this->matrixArr[row][col] - matrix.matrixArr[row][col];
@@ -93,13 +99,13 @@ Matrix Matrix::operator-(const Matrix& matrix)
 
 Matrix Matrix::operator*(const Matrix& matrix)
 {
-	int** arr = new int*[this->size];
+	double** arr = new double*[this->size];
 	for (int row = 0; row < this->size; row++)
 	{
-		arr[row] = new int[this->size];
+		arr[row] = new double[this->size];
 		for (int col = 0; col < this->size; col++)
 		{
-			int cellResult = 0;
+			double cellResult = 0;
 			for (int i = 0; i < this->size; i++)
 			{
 				cellResult += this->matrixArr[row][i] * matrix.matrixArr[i][col];
@@ -113,8 +119,9 @@ Matrix Matrix::operator*(const Matrix& matrix)
 	return resultMatrix;
 }
 
-double** Matrix::operator!()
+Matrix Matrix::operator!()
 {
+	Matrix result(this->size);
 	double** inverseMatrix = new double*[this->size];
 	for (int i = 0; i < this->size; i++)
 	{
@@ -123,16 +130,14 @@ double** Matrix::operator!()
 
 	if (inverse(this->matrixArr, inverseMatrix))
 	{
-		return inverseMatrix;
+		result.setMatrix(inverseMatrix);
+		this->deleteMatrix(inverseMatrix, this->size);
 	}
-	else
-	{
-		std::cout << "Cannot get inverse matrix!\n";
-		return nullptr;
-	}
+	
+	return result;
 }
 
-int Matrix::operator*()
+double Matrix::operator*()
 {
 	return determinantOfMatrix(this->matrixArr, this->size);
 }
@@ -142,7 +147,7 @@ int Matrix::getSize() const
 	return this->size;
 }
 
-void Matrix::deleteMatrix(int** matrixArr, int size)
+void Matrix::deleteMatrix(double** matrixArr, int size)
 {
 	if (matrixArr == nullptr)
 	{
@@ -156,7 +161,7 @@ void Matrix::deleteMatrix(int** matrixArr, int size)
 	delete[] matrixArr;
 }
 
-void Matrix::getCofactor(int** matrix, int** temp, int p, int q, int n)
+void Matrix::getCofactor(double** matrix, double** temp, double p, double q, int n)
 {
 	int i = 0, j = 0;
 
@@ -183,7 +188,7 @@ void Matrix::getCofactor(int** matrix, int** temp, int p, int q, int n)
 	}
 }
 
-void Matrix::adjoint(int ** matrix, int ** adj)
+void Matrix::adjoint(double ** matrix, double ** adj)
 {
 	if (this->size == 1)
 	{
@@ -193,10 +198,10 @@ void Matrix::adjoint(int ** matrix, int ** adj)
 
 	// temp is used to store cofactors of matrix[][]
 	int sign = 1;
-	int** temp = new int*[this->size];
+	double** temp = new double*[this->size];
 	for (int row = 0; row < this->size; row++)
 	{
-		temp[row] = new int[this->size];
+		temp[row] = new double[this->size];
 	}
 
 	for (int i = 0; i < this->size; i++)
@@ -221,21 +226,21 @@ void Matrix::adjoint(int ** matrix, int ** adj)
 
 // Function to calculate and store inverse, returns false if
 // matrix is singular
-bool Matrix::inverse(int ** matrix, double ** inverse)
+bool Matrix::inverse(double ** matrix, double ** inverse)
 {
 	// Find determinant of A[][]
-	int det = determinantOfMatrix(matrix, this->size);
+	double det = determinantOfMatrix(matrix, this->size);
 	if (det == 0)
 	{
-		std::cout << "Singular matrix, can't find its inverse";
+		std::cout << "Singular matrix, cannot find its inverse!\n";
 		return false;
 	}
 
 	// Find adjoint
-	int** adj = new int*[this->size];
+	double** adj = new double*[this->size];
 	for (int row = 0; row < this->size; row++)
 	{
-		adj[row] = new int[this->size];
+		adj[row] = new double[this->size];
 	}
 	adjoint(matrix, adj);
 
@@ -250,18 +255,18 @@ bool Matrix::inverse(int ** matrix, double ** inverse)
 
 /* Recursive function for finding determinant of matrix.
 n is current dimension of mat[][]. */
-int Matrix::determinantOfMatrix(int** mat, int n)
+double Matrix::determinantOfMatrix(double** mat, int n)
 {
-	int D = 0; // Initialize result
+	double D = 0; // Initialize result
 
 			   //  Base case : if matrix contains single element
 	if (n == 1)
 		return mat[0][0];
 
-	int** temp = new int*[this->size]; // To store cofactors
+	double** temp = new double*[this->size]; // To store cofactors
 	for (int row = 0; row < this->size; row++)
 	{
-		temp[row] = new int[this->size];
+		temp[row] = new double[this->size];
 	}
 
 	int sign = 1;  // To store sign multiplier
@@ -284,6 +289,11 @@ int Matrix::determinantOfMatrix(int** mat, int n)
 
 std::ostream & operator<<(std::ostream & os, const Matrix & matrix)
 {
+	if (matrix.matrixArr == nullptr)
+	{
+		return os;
+	}
+	
 	for (int i = 0; i < matrix.size; i++)
 	{
 		for (int j = 0; j < matrix.size; j++)
@@ -310,11 +320,11 @@ std::istream & operator>>(std::istream & is, Matrix & matrix)
 	matrix.size = size;
 
 	std::cout << "Enter matrix elements:\n";
-	int** arr = new int*[size];
+	double** arr = new double*[size];
 	int element;
 	for (int i = 0; i < size; i++)
 	{
-		arr[i] = new int[size];
+		arr[i] = new double[size];
 		for (int j = 0; j < size; j++)
 		{
 			is >> element;
