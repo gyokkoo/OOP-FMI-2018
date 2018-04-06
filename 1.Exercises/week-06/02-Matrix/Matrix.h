@@ -11,9 +11,11 @@ public:
 	Matrix(const Matrix& other);
 	~Matrix();
 
+	Matrix& operator=(const Matrix& matrix);
 	Matrix operator+(const Matrix& matrix);
 	Matrix operator-(const Matrix& matrix);
 	Matrix operator*(const Matrix& matrix);
+	Matrix operator*(double lambda);
 	// Matrix operator*(const Vector& vector);
 	Matrix operator!();
 	double operator*();

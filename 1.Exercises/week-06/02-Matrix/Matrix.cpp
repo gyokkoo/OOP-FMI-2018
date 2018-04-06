@@ -40,6 +40,7 @@ Matrix::~Matrix()
 void Matrix::setMatrix(double ** matrix)
 {
 	this->deleteMatrix(this->matrixArr, this->size);
+
 	this->matrixArr = new double*[this->size];
 	for (int row = 0; row < this->size; row++)
 	{
@@ -49,6 +50,19 @@ void Matrix::setMatrix(double ** matrix)
 			this->matrixArr[row][col] = matrix[row][col];
 		}
 	}
+}
+
+Matrix & Matrix::operator=(const Matrix & matrix)
+{
+	if (this != &matrix)
+	{
+		this->deleteMatrix(this->matrixArr, this->size);
+
+		this->size = matrix.size;
+		this->setMatrix(matrix.matrixArr);
+	}
+
+	return *this;
 }
 
 Matrix Matrix::operator+(const Matrix& matrix)
@@ -119,6 +133,25 @@ Matrix Matrix::operator*(const Matrix& matrix)
 	return resultMatrix;
 }
 
+Matrix Matrix::operator*(double lambda)
+{
+	double** arr = new double*[this->size];
+	for (int row = 0; row < this->size; row++)
+	{
+		arr[row] = new double[this->size];
+		for (int col = 0; col < this->size; col++)
+		{
+			arr[row][col] = lambda * arr[row][col];
+
+		}
+	}
+
+	Matrix resultMatrix(arr, this->size);
+	this->deleteMatrix(arr, this->size);
+	return resultMatrix;
+}
+
+// Return the inverse matrix. If not possible return matrix with nullptr array
 Matrix Matrix::operator!()
 {
 	Matrix result(this->size);
@@ -128,7 +161,7 @@ Matrix Matrix::operator!()
 		inverseMatrix[i] = new double[this->size];
 	}
 
-	if (inverse(this->matrixArr, inverseMatrix))
+	if (this->inverse(this->matrixArr, inverseMatrix))
 	{
 		result.setMatrix(inverseMatrix);
 		this->deleteMatrix(inverseMatrix, this->size);
@@ -188,6 +221,12 @@ void Matrix::getCofactor(double** matrix, double** temp, double p, double q, int
 	}
 }
 
+/*
+Adjoint (or Adjugate) of a matrix is the matrix obtained 
+by taking transpose of the cofactor matrix 
+of a given square matrix is called its Adjoint or Adjugate matrix. 
+Source: https://www.geeksforgeeks.org/adjoint-inverse-matrix/
+*/
 void Matrix::adjoint(double ** matrix, double ** adj)
 {
 	if (this->size == 1)
@@ -196,7 +235,7 @@ void Matrix::adjoint(double ** matrix, double ** adj)
 		return;
 	}
 
-	// temp is used to store cofactors of matrix[][]
+	// temp is used to store cofactors of matrix
 	int sign = 1;
 	double** temp = new double*[this->size];
 	for (int row = 0; row < this->size; row++)
@@ -208,7 +247,7 @@ void Matrix::adjoint(double ** matrix, double ** adj)
 	{
 		for (int j = 0; j < this->size; j++)
 		{
-			// Get cofactor of A[i][j]
+			// Get cofactor of matrix[i][j]
 			getCofactor(matrix, temp, i, j, this->size);
 
 			// sign of adj[j][i] positive if sum of row
@@ -224,11 +263,12 @@ void Matrix::adjoint(double ** matrix, double ** adj)
 	deleteMatrix(temp, this->size);
 }
 
-// Function to calculate and store inverse, returns false if
-// matrix is singular
+/*
+Function to calculate and store inverse, returns false if matrix is singular
+Source: https://www.geeksforgeeks.org/adjoint-inverse-matrix/
+*/
 bool Matrix::inverse(double ** matrix, double ** inverse)
 {
-	// Find determinant of A[][]
 	double det = determinantOfMatrix(matrix, this->size);
 	if (det == 0)
 	{
@@ -245,23 +285,30 @@ bool Matrix::inverse(double ** matrix, double ** inverse)
 	adjoint(matrix, adj);
 
 	// Find Inverse using formula "inverse(A) = adj(A)/det(A)"
-	for (int i = 0; i< this->size; i++)
+	for (int i = 0; i < this->size; i++)
+	{
 		for (int j = 0; j < this->size; j++)
+		{
 			inverse[i][j] = adj[i][j] / double(det);
-
+		}
+	}
+		
 	deleteMatrix(adj, this->size);
 	return true;
 }
 
-/* Recursive function for finding determinant of matrix.
-n is current dimension of mat[][]. */
-double Matrix::determinantOfMatrix(double** mat, int n)
+/* 
+Recursive function for finding determinant of matrix.
+Source: https://www.geeksforgeeks.org/determinant-of-a-matrix/
+*/
+double Matrix::determinantOfMatrix(double** matrix, int n)
 {
-	double D = 0; // Initialize result
+	double determinant = 0; 
 
-			   //  Base case : if matrix contains single element
 	if (n == 1)
-		return mat[0][0];
+	{
+		return matrix[0][0];
+	}
 
 	double** temp = new double*[this->size]; // To store cofactors
 	for (int row = 0; row < this->size; row++)
@@ -271,12 +318,12 @@ double Matrix::determinantOfMatrix(double** mat, int n)
 
 	int sign = 1;  // To store sign multiplier
 
-				   // Iterate for each element of first row
+	// Iterate for each element of first row
 	for (int f = 0; f < n; f++)
 	{
-		// Getting Cofactor of mat[0][f]
-		this->getCofactor(mat, temp, 0, f, n);
-		D += sign * mat[0][f] * determinantOfMatrix(temp, n - 1);
+		// Getting Cofactor of matrix[0][f]
+		this->getCofactor(matrix, temp, 0, f, n);
+		determinant += sign * matrix[0][f] * determinantOfMatrix(temp, n - 1);
 
 		// terms are to be added with alternate sign
 		sign = -sign;
@@ -284,7 +331,7 @@ double Matrix::determinantOfMatrix(double** mat, int n)
 
 	this->deleteMatrix(temp, this->size);
 
-	return D;
+	return determinant;
 }
 
 std::ostream & operator<<(std::ostream & os, const Matrix & matrix)

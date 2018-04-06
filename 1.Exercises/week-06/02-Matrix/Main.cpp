@@ -60,6 +60,9 @@ int main()
 
 	Matrix aMultiplyB = a * b;
 	std::cout << "a * b = \n" << aMultiplyB;
+	
+	Matrix aMultiplyLambda = a * 5;
+	//std::cout << "a * 5 = :\n" << aMultiplyLambda;
 
 	int simpleMatrixSize = 2;
 	double** simpleMatrix = createMatrix(simpleMatrixSize);
@@ -76,7 +79,7 @@ int main()
 	
 	Matrix inverse = !matrixC;
 	std::cout << "Inverse matrix of matrix C:\n" << inverse;
-	
+
 	deleteMatrix(matrixA, size);
 	deleteMatrix(matrixB, size);
 	deleteMatrix(simpleMatrix, simpleMatrixSize);
