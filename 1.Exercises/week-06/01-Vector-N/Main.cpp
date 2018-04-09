@@ -1,19 +1,6 @@
 #include <iostream>
 #include "Vector.h"
 
-std::ostream& operator<<(std::ostream& os, const Vector& vector)
-{
-	double* coordinates = vector.getCoordinates();
-	int size = vector.getDimension();
-	for (int i = 0; i < size; i++)
-	{
-		os << coordinates[i] << " ";
-	}
-	os << "\n";
-
-	return os;
-}
-
 int main()
 {
 	double* firstCoordinates = new double[3];
@@ -35,6 +22,10 @@ int main()
 	std::cout << "Vector b - a = " << vectorB - vectorA;
 	std::cout << "Vector a + b = " << vectorA + vectorB;
 	std::cout << "Vector a * 5 = " << vectorA * 5;
+
+	Vector v;
+	std::cin >> v;
+	std::cout << v;
 
 	delete[] firstCoordinates;
 	delete[] secondCoordinates;
