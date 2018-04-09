@@ -1,5 +1,4 @@
 #pragma once
-
 const int DEFAULT_SIZE = 3;
 
 class Matrix
@@ -16,7 +15,7 @@ public:
 	Matrix operator-(const Matrix& matrix);
 	Matrix operator*(const Matrix& matrix);
 	Matrix operator*(double lambda);
-	// Matrix operator*(const Vector& vector);
+
 	Matrix operator!();
 	double operator*();
 
@@ -27,7 +26,6 @@ public:
 	// friend grants a function access to private members of the class where the friend declaration appears.
 	friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
 	friend std::istream& operator>>(std::istream& is, Matrix& matrix);
-
 private:
 	void deleteMatrix(double** matrixArr, int size);
 	double determinantOfMatrix(double** matrix, int size);
@@ -38,3 +36,4 @@ private:
 	int size;
 	double** matrixArr;
 };
+

@@ -7,9 +7,18 @@ Matrix::Matrix() : matrixArr(nullptr), size(DEFAULT_SIZE)
 {
 }
 
-Matrix::Matrix(int size) : matrixArr(nullptr)
+Matrix::Matrix(int size)
 {
 	this->size = size;
+	this->matrixArr = new double*[size];
+	for (int i = 0; i < size; i++)
+	{
+		this->matrixArr[i] = new double[size];
+		for (int j = 0; j < size; j++)
+		{
+			this->matrixArr[i][j] = 0;
+		}
+	}
 }
 
 Matrix::Matrix(double** matrix, int size)
@@ -17,7 +26,6 @@ Matrix::Matrix(double** matrix, int size)
 	this->size = size;
 	this->setMatrix(matrix);
 }
-
 
 Matrix::Matrix(const Matrix & other)
 {
@@ -73,19 +81,16 @@ Matrix Matrix::operator+(const Matrix& matrix)
 		assert(this->size == matrix.getSize());
 	}
 
-	double** matrixArr = new double*[this->size];
+	Matrix result(this->size);
 	for (int row = 0; row < this->size; row++)
 	{
-		matrixArr[row] = new double[this->size];
 		for (int col = 0; col < this->size; col++)
 		{
-			matrixArr[row][col] = this->matrixArr[row][col] + matrix.matrixArr[row][col];
+			result.matrixArr[row][col] = this->matrixArr[row][col] + matrix.matrixArr[row][col];
 		}
 	}
 
-	Matrix resultMatrix(matrixArr, this->size);
-	this->deleteMatrix(matrixArr, this->size);
-	return resultMatrix;
+	return result;
 }
 
 Matrix Matrix::operator-(const Matrix& matrix)
@@ -96,27 +101,23 @@ Matrix Matrix::operator-(const Matrix& matrix)
 		assert(this->size == matrix.getSize());
 	}
 
-	double** matrixArr = new double*[this->size];
+	Matrix result(this->size);
 	for (int row = 0; row < this->size; row++)
 	{
-		matrixArr[row] = new double[this->size];
 		for (int col = 0; col < this->size; col++)
 		{
-			matrixArr[row][col] = this->matrixArr[row][col] - matrix.matrixArr[row][col];
+			result.matrixArr[row][col] = this->matrixArr[row][col] - matrix.matrixArr[row][col];
 		}
 	}
 
-	Matrix resultMatrix(matrixArr, this->size);
-	deleteMatrix(matrixArr, this->size);
-	return resultMatrix;
+	return result;
 }
 
 Matrix Matrix::operator*(const Matrix& matrix)
 {
-	double** arr = new double*[this->size];
+	Matrix result(this->size);
 	for (int row = 0; row < this->size; row++)
 	{
-		arr[row] = new double[this->size];
 		for (int col = 0; col < this->size; col++)
 		{
 			double cellResult = 0;
@@ -124,31 +125,24 @@ Matrix Matrix::operator*(const Matrix& matrix)
 			{
 				cellResult += this->matrixArr[row][i] * matrix.matrixArr[i][col];
 			}
-			arr[row][col] = cellResult;
+			result.matrixArr[row][col] = cellResult;
 		}
 	}
 
-	Matrix resultMatrix(arr, this->size);
-	this->deleteMatrix(arr, this->size);
-	return resultMatrix;
+	return result;
 }
 
 Matrix Matrix::operator*(double lambda)
 {
-	double** arr = new double*[this->size];
+	Matrix result(this->size);
 	for (int row = 0; row < this->size; row++)
 	{
-		arr[row] = new double[this->size];
 		for (int col = 0; col < this->size; col++)
 		{
-			arr[row][col] = lambda * arr[row][col];
-
+			result.matrixArr[row][col] = lambda * result.matrixArr[row][col];
 		}
 	}
-
-	Matrix resultMatrix(arr, this->size);
-	this->deleteMatrix(arr, this->size);
-	return resultMatrix;
+	return result;
 }
 
 // Return the inverse matrix. If not possible return matrix with nullptr array
@@ -164,9 +158,9 @@ Matrix Matrix::operator!()
 	if (this->inverse(this->matrixArr, inverseMatrix))
 	{
 		result.setMatrix(inverseMatrix);
-		this->deleteMatrix(inverseMatrix, this->size);
 	}
-	
+
+	this->deleteMatrix(inverseMatrix, this->size);
 	return result;
 }
 
