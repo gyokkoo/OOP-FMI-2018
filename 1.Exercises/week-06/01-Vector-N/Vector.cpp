@@ -9,6 +9,10 @@ Vector::Vector(int dimension)
 {
 	this->setDimension(dimension);
 	this->coordinates = new double[dimension];
+	for (int i = 0; i < this->dimension; i++)
+	{
+		this->coordinates[i] = 0;
+	}
 }
 
 Vector::Vector(double * coordinates, int dimension)
