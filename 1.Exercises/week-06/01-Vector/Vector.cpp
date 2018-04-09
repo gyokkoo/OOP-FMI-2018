@@ -8,6 +8,7 @@ Vector::Vector(double x, double y, double z)
 	this->setZ(z);
 }
 
+
 Vector Vector::operator+(const Vector & vector) const
 {
 	Vector result;
@@ -37,20 +38,20 @@ Vector Vector::operator*(double lambda) const
 	return result;
 }
 
-double Vector::operator*(const Vector & b) const
+double Vector::operator*(const Vector & v) const
 {
 	return 
-		this->getX() * b.getX() + 
-		this->getY() * b.getY() + 
-		this->getZ() * b.getZ();
+		this->getX() * v.getX() + 
+		this->getY() * v.getY() + 
+		this->getZ() * v.getZ();
 }
 
-Vector Vector::operator^(const Vector & b) const
+Vector Vector::operator^(const Vector & v) const
 {
 	Vector result;
-	result.setX(this->getY() * b.getZ() - this->getZ() * b.getY());
-	result.setY(this->getZ() * b.getX() - this->getX() * b.getZ());
-	result.setZ(this->getX() * b.getY() - this->getY() * b.getX());
+	result.setX(this->getY() * v.getZ() - this->getZ() * v.getY());
+	result.setY(this->getZ() * v.getX() - this->getX() * v.getZ());
+	result.setZ(this->getX() * v.getY() - this->getY() * v.getX());
 	return result;
 }
 
@@ -83,4 +84,34 @@ double Vector::getY() const
 double Vector::getZ() const
 {
 	return this->z;
+}
+
+Vector operator*(double lambda, const Vector & v)
+{
+	Vector result;
+	result.setX(lambda * v.getX());
+	result.setY(lambda * v.getY());
+	result.setZ(lambda * v.getZ());
+	return result;
+}
+
+std::ostream & operator<<(std::ostream & os, const Vector & v)
+{
+	os << "{" << v.getX() << ", " << v.getY() << ", " << v.getZ() << " }";
+	return os;
+}
+
+std::istream & operator>>(std::istream & is, Vector & v)
+{
+	double temp;
+	std::cout << "Enter X = ";
+	is >> temp;
+	v.setX(temp);
+	std::cout << "Enter Y = ";
+	is >> temp;
+	v.setY(temp);
+	std::cout << "Enter Z = ";
+	is >> temp;
+	v.setZ(temp);
+	return is;
 }

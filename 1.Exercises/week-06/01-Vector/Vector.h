@@ -8,8 +8,8 @@ public:
 	Vector operator+(const Vector& vector) const;
 	Vector operator-(const Vector& vector) const;
 	Vector operator*(double lambda) const;
-	double operator*(const Vector& b) const;
-	Vector operator^(const Vector& b) const;
+	double operator*(const Vector& vector) const;
+	Vector operator^(const Vector& vector) const;
 
 	double getX() const;
 	double getY() const;
@@ -23,3 +23,9 @@ private:
 	double y;
 	double z;
 };
+
+Vector operator*(double lambda, const Vector& v);
+
+std::ostream& operator<<(std::ostream& os, const Vector& v);
+
+std::istream& operator>>(std::istream& is, Vector& v);
