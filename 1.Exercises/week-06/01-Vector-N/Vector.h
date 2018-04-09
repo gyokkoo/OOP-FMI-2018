@@ -15,7 +15,6 @@ public:
 	Vector operator*(double lambda);
 	double operator[](int index) const;
 	
-	double* getCoordinates() const;
 	int getDimension() const;
 
 	void setCoordinates(double* coordinates);

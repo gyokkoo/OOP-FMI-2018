@@ -87,11 +87,6 @@ double Vector::operator[](int index) const
 	return this->coordinates[index];
 }
 
-double * Vector::getCoordinates() const
-{
-	return this->coordinates;
-}
-
 int Vector::getDimension() const
 {
 	return this->dimension;
@@ -121,11 +116,10 @@ void Vector::setDimension(int dimension)
 
 std::ostream & operator<<(std::ostream & os, const Vector & v)
 {
-	double* coordinates = v.getCoordinates();
 	int size = v.getDimension();
 	for (int i = 0; i < size; i++)
 	{
-		os << coordinates[i] << " ";
+		os << v[i] << " ";
 	}
 	os << "\n";
 	return os;
