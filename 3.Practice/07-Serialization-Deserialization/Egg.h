@@ -9,12 +9,11 @@ public:
 	Egg(const char* name, int size);
 	Egg(const Egg& egg);
 	~Egg();
-
 	Egg& operator=(const Egg& egg);
 	
-	bool serialization(std::ofstream& os) const;
-
-	// bool deserialization(std::ifstream& is);
+	void eggPrint(std::ofstream& os) const;
+	void eggSerialization(std::ofstream& os) const;
+	void eggDeserialization(std::ifstream& is);
 
 	const char* getName() const;
 	int getSize() const;

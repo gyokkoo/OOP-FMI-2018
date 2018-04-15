@@ -29,25 +29,37 @@ Egg::~Egg()
 	delete[] this->name;
 }
 
-Egg &Egg::operator=(const Egg& egg)
+Egg &Egg::operator=(const Egg& rhs)
 {
-	if (this != &egg)
+	if (this != &rhs)
 	{
-		this->size = egg.size;
-		this->name = new char[egg.size + 1];
-		strcpy_s(this->name, this->size + 1, egg.name);
+		delete[] this->name;
+		this->size = rhs.size;
+		this->name = new char[rhs.size + 1];
+		strcpy_s(this->name, this->size + 1, rhs.name);
 	}
 
 	return *this;
 }
 
-bool Egg::serialization(std::ofstream &os) const
+void Egg::eggPrint(std::ofstream & os) const
+{
+	os << this->name << " " << this->size << "\n";
+}
+
+void Egg::eggSerialization(std::ofstream & os) const
 {
 	os.write((const char*)& this->size, sizeof(this->size));
 	os.write(this->name, this->size);
+}
 
-	return true;
-}	
+void Egg::eggDeserialization(std::ifstream & is)
+{
+	is.read((char *)& this->size, sizeof(this->size));
+	this->name = new char[this->size + 1];
+	is.read(this->name, this->size);
+	this->name[this->size] = '\0';
+}
 
 const char* Egg::getName() const
 {
@@ -62,10 +74,11 @@ int Egg::getSize() const
 void Egg::setName(const char* name)
 {
 	delete[] this->name;
-	this->name = new char[strlen(name) + 1];
+	int nameLength = strlen(name);
+	this->name = new char[nameLength + 1];
 	for (int i = 0; i < this->size; i++)
 	{
 		this->name[i] = name[i];
 	}
-	this->name[strlen(name)] = '\0';
+	this->name[nameLength] = '\0';
 }

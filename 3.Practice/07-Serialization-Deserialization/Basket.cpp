@@ -2,12 +2,9 @@
 #include <iostream>
 #include "Basket.h"
 
-Basket::Basket() : eggs(nullptr), size(0), capacity(0)
+Basket::Basket(const char * name) : capacity(INITIAL_CAPACITY)
 {
-}
-
-Basket::Basket(const char * name) : size(0), capacity(INITIAL_CAPACITY)
-{
+	this->count = 0;
 	this->setName(name);
 	this->eggs = new Egg[this->capacity];
 }
@@ -31,9 +28,9 @@ Basket & Basket::operator=(const Basket & basket)
 		delete[] this->eggs;
 		this->setName(basket.name);
 		this->capacity = basket.capacity;
-		this->size = basket.size;
+		this->count = basket.count;
 		this->eggs = new Egg[basket.capacity];
-		for (int i = 0; i < basket.size; i++)
+		for (int i = 0; i < basket.count; i++)
 		{
 			this->eggs[i] = basket.eggs[i];
 		}
@@ -45,54 +42,105 @@ Basket & Basket::operator=(const Basket & basket)
 void Basket::generateReport()
 {
 	char fileName[100] = "report_";
+	std::cout << this->name << "\n";
 	strcat_s(fileName, this->name);
 	strcat_s(fileName, ".txt");
-	std::cout << this->name << "\n";
+	
 	std::ofstream os(fileName, std::ios::trunc);
-	for (int i = 0; i < this->size; i++)
+	for (int i = 0; i < this->count; i++)
 	{
-		this->eggs[i].serialization(os);
+		this->eggs[i].eggPrint(os);
 	}
 	os.close();
+}
+
+void Basket::serialization()
+{
+	char fileName[100] = "content_";
+	strcat_s(fileName, this->name);
+	strcat_s(fileName, ".dat");
+
+	std::ofstream os(fileName, std::ios::binary | std::ios::trunc);
+	if (!os)
+	{
+		std::cerr << "Error opening file: " << fileName << "\n";
+		return;
+	}
+
+	os.write((const char*)& this->count, sizeof(this->count));
+	for (int i = 0; i < this->count; i++)
+	{
+		this->eggs[i].eggSerialization(os);
+	}
+	os.close();
+}
+
+void Basket::deserialization()
+{
+	char fileName[100] = "content_";
+	strcat_s(fileName, this->name);
+	strcat_s(fileName, ".dat");
+
+	std::ifstream is(fileName, std::ios::binary);
+	if (!is)
+	{
+		std::cerr << "Error opening file: " << fileName << "\n";
+		return;
+	}
+
+	int eggsCount = 0;
+	is.read((char *)& eggsCount, sizeof(eggsCount));
+
+	Egg egg;
+	for (int i = 0; i < eggsCount; i++)
+	{
+		egg.eggDeserialization(is);
+		this->addEgg(egg);
+	}
+
+	is.close();
 }
 
 void Basket::setName(const char * name)
 {
 	delete[] this->name;
-	this->name = new char[strlen(name) + 1];
-	for (int i = 0; i < this->size; i++)
+	int nameLength = strlen(name);
+	this->name = new char[nameLength + 1];
+	for (int i = 0; i < nameLength; i++)
 	{
 		this->name[i] = name[i];
 	}
-	this->name[strlen(name)] = '\0';
+	this->name[nameLength] = '\0';
 }
 
-void Basket::addEgg(const char * eggName)
+void Basket::addEgg(const Egg& egg)
 {
-	if (this->size >= this->capacity)
-	{
-		resize();
-	}
-
-	Egg eggToAdd(eggName);
-	this->eggs[size] = eggName;
-	size++;
-}
-
-void Basket::removeEgg(const char * eggName)
-{
-	if (this->size == 0)
+	if (this->getEggIndex(egg.getName()) != -1)
 	{
 		return;
 	}
 
-	for (int i = 0; i < this->size; i++)
+	if (this->count >= this->capacity)
 	{
-		if (strcmp(this->eggs[i].getName(), eggName) == 0)
-		{
-			this->eggs[i] = nullptr;
-			shiftLeft(i);
-		}
+		resize();
+	}
+
+	this->eggs[count] = egg;
+	count++;
+}
+
+void Basket::removeEgg(const Egg& egg)
+{
+	int indexToRemove = this->getEggIndex(egg.getName());
+	if (indexToRemove == -1)
+	{
+		return;
+	}
+	
+	count--;
+	if (count != 0)
+	{
+		this->eggs[indexToRemove] = this->eggs[this->count];
 	}
 }
 
@@ -110,28 +158,24 @@ void Basket::resize()
 	Egg* temp = this->eggs;
 	this->eggs = new Egg[capacity];
 	this->capacity = capacity;
-	for (int i = 0; i < this->size; i++)
+	for (int i = 0; i < this->count; i++)
 	{
 		this->eggs[i] = temp[i];
 	}
 
 	delete[] temp;
-	std::cout << "Array was resized, new capacity: " << this->capacity << "\n";
+	// std::cout << "Array was resized, new capacity: " << this->capacity << "\n";
 }
 
-void Basket::shiftLeft(int index)
+int Basket::getEggIndex(const char * eggName)
 {
-	if (index < 0 || index >= this->size)
+	for (int i = 0; i < this->count; i++)
 	{
-		return;
+		if (_stricmp(eggName, this->eggs[i].getName()) == 0)
+		{
+			return i;
+		}
 	}
 
-	int writeIndex = index;
-	int readIndex = index + 1;
-	while (readIndex < this->size)
-	{
-		this->eggs[writeIndex] = this->eggs[readIndex];
-		writeIndex++;
-		readIndex++;
-	}
+	return -1;
 }
