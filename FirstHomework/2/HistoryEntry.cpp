@@ -116,6 +116,8 @@ std::istream& operator>>(std::istream& is, HistoryEntry& entry)
 	inputUrl[index] = '\0';
 	
 	entry.setUrl(inputUrl);
+	delete[] inputUrl;
+	
 	return is;
 }
 
