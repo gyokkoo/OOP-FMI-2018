@@ -11,5 +11,13 @@ int main()
 	house.print();
 	std::cout << "----------\n";
 
+	// Building inputBuilding;
+	// inputBuilding.read();
+	// inputBuilding.print();
+
+	House inputHouse;
+	inputHouse.read();
+	inputHouse.print();
+
 	return 0;
 }

@@ -73,6 +73,25 @@ void House::setOwnerName(const char* ownerName)
 	this->ownerName[strLength] = '\0';
 }
 
+void House::read()
+{
+	Building::read();
+
+	int storeys = 0;
+	int nameLength = 1024;
+	char* name = new char[nameLength];
+
+	std::cout << "Enter house storeys = ";
+	std::cin >> storeys;
+	this->setStoreys(storeys);
+
+	std::cout << "Enter owner name: ";
+	std::cin.ignore();
+	std::cin.getline(name, nameLength - 1);
+	this->setOwnerName(name);
+	delete[] name;
+}
+
 void House::print() const
 {
 	std::cout << "House class - print() \n";
@@ -80,4 +99,5 @@ void House::print() const
 	std::cout 
 		<< "Storeys -> " << this->getStoreys() << "\n"
 		<< "Owner name -> " << this->getOwnerName() << "\n";
+	std::cout << "---------------------\n";
 }

@@ -109,6 +109,28 @@ void Building::setAddress(const char* address)
 	this->address[strLength] = '\0';
 }
 
+void Building::read()
+{
+	int height = 0;
+	double area = 0;
+	int addressSize = 1024;
+	char* address = new char[addressSize];
+
+	std::cout << "Enter height = ";
+	std::cin >> height;
+	this->setHeight(height);
+
+	std::cout << "Enter area = ";
+	std::cin >> area;
+	this->setArea(area);
+
+	std::cout << "Enter building address: ";
+	std::cin.ignore();
+	std::cin.getline(address, addressSize - 1);
+	this->setAddress(address);
+	delete[] address;
+}
+
 void Building::print() const
 {
 	std::cout << "Building class - print() \n"

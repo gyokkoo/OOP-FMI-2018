@@ -17,6 +17,7 @@ public:
 	void setArea(double area);
 	void setAddress(const char* address);
 
+	void read();
 	void print() const;
 private:
 	int height;

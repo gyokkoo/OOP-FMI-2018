@@ -16,6 +16,7 @@ public:
 	void setStoreys(int storeys);
 	void setOwnerName(const char* name);
 
+	void read();
 	void print() const;
 private:
 	int storeys;
