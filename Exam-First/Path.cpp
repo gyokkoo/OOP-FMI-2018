@@ -115,19 +115,8 @@ void Path::clear()
 
 void Path::shiftLeft(int index)
 {
-	Point* temp = this->points;
-	this->points = new Point[MAX_SIZE];
-	int j = 0;
-	for (int i = 0; i <= this->top; i++)
+	for (int i = index; i < this->top; ++i)
 	{
-		if (i == index)
-		{
-			continue;
-		}
-
-		this->points[j] = temp[i];
-		j++;
+		this->points[i] = this->points[i + 1];
 	}
-
-	delete[] temp;
 }
