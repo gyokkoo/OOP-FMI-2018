@@ -24,6 +24,6 @@ int main()
 	techCompany.printAll();
 
 	std::cout << "Employees working... \n";
-	std::cout << "Sum ~ " << techCompany.getTotalWork() << "\n";
+	std::cout << "Sum ~ " << techCompany.getTotalWork() << " leva" << "\n";
 	return 0;
 }

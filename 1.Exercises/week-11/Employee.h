@@ -21,7 +21,7 @@ public:
 
 	virtual void print() const;
 protected:
-	virtual double getUsefulness(double moneyPerMonth);
+	double getUsefulness(double moneyPerMonth);
 private:
 	char* name;
 	int experience;

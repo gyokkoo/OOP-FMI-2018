@@ -11,6 +11,10 @@ Programmer::Programmer(const char * name, int experience, double salary, const c
 	this->setLanguages(languages);
 }
 
+Programmer::~Programmer()
+{
+}
+
 double Programmer::work()
 {
 	double moneyPerMonth = 75;

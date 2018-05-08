@@ -10,6 +10,25 @@ Manager::Manager(const char* name, int experience, double salary, int employeeCo
 	this->setEmployeeCount(employeeCount);
 }
 
+Manager::~Manager()
+{
+}
+
+double Manager::work()
+{
+	double workPercentage = 0;
+	if (this->getExperience() < 2 * 12)
+	{
+		workPercentage = 25;
+	}
+	else if (this->getExperience() > 4 * 12)
+	{
+		workPercentage = (this->getExperience() - 4 * 12) * 10;
+	}
+
+	return workPercentage;
+}
+
 void Manager::setEmployeeCount(int count)
 {
 	this->employeeCount = count;

@@ -18,7 +18,7 @@ public:
 
 	virtual double getUsefulness(double moneyPerMonth);
 
-	void print() const;
+	virtual void print() const;
 private:
 	char* project;
 };

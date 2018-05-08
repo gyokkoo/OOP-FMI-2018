@@ -6,13 +6,14 @@ class QA : public ITSpecialist
 public:
 	QA();
 	QA(const char* name, int experience, double salary, const char* project, bool isManual);
+	virtual ~QA();
 
 	virtual double work();
 
 	void setIsManual(bool isManual);
 	bool getIsManual() const;
 
-	void print() const;
+	virtual void print() const;
 private:
 	bool isManual;
 };

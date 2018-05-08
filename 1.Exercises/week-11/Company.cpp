@@ -36,14 +36,7 @@ double Company::getTotalWork() const
 		totalWork += this->employees[i]->work();
 	}
 
-	if (this->boss->getExperience() < 2)
-	{
-		totalWork = totalWork * 0.25;
-	}
-	else if (this->boss->getExperience() > 4)
-	{
-		totalWork = totalWork * (this->boss->getExperience() - 4) * 0.1;
-	}
+	totalWork += totalWork * (this->boss->work() / 100);
 
 	return totalWork;
 }

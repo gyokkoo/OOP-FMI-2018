@@ -11,6 +11,10 @@ QA::QA(const char * name, int experience, double salary, const char * project, b
 	this->setIsManual(isManual);
 }
 
+QA::~QA()
+{
+}
+
 double QA::work()
 {
 	double moneyPerMonth = this->isManual ? 55 : 40;

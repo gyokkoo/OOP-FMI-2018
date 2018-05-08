@@ -80,7 +80,6 @@ double ITSpecialist::getUsefulness(double moneyPerMonth)
 	}
 
 	return usefulness;
-	return 0.0;
 }
 
 void ITSpecialist::print() const
