@@ -32,6 +32,12 @@ ITSpecialist::~ITSpecialist()
 	delete[] this->project;
 }
 
+double ITSpecialist::work()
+{
+	std::cout << "ItSpecialist work!\n";
+	return 0.0;
+}
+
 void ITSpecialist::setProject(const char * project)
 {
 	if (project == nullptr)
@@ -62,7 +68,6 @@ const char* ITSpecialist::getProject() const
 
 double ITSpecialist::getUsefulness(double moneyPerMonth)
 {
-	std::cout << "ITSpecialist class getUserfulness\n";
 	if (this->getExperience() < 6)
 	{
 		return 0;

@@ -14,7 +14,9 @@ QA::QA(const char * name, int experience, double salary, const char * project, b
 double QA::work()
 {
 	double moneyPerMonth = this->isManual ? 55 : 40;
-	return this->getUsefulness(moneyPerMonth);
+	double usefulness = this->getUsefulness(moneyPerMonth);
+	std::cout << "Quality Assurance " << this->getName() << " usefulness ~ " << usefulness << "\n";
+	return usefulness;
 }
 
 void QA::setIsManual(bool isManual)

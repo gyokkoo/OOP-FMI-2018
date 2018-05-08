@@ -14,7 +14,9 @@ Programmer::Programmer(const char * name, int experience, double salary, const c
 double Programmer::work()
 {
 	double moneyPerMonth = 75;
-	return this->getUsefulness(moneyPerMonth);
+	double usefulness = this->getUsefulness(moneyPerMonth);
+	std::cout << "Programmer " << this->getName() << " usefulness ~ " << usefulness << "\n";
+	return usefulness;
 }
 
 const char* Programmer::getLanguages() const

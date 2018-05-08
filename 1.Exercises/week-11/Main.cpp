@@ -15,24 +15,15 @@ int main()
 	QA* tester = new QA("Zdravi Nervi", 18, 2500, "Cloud system", false);
 
 	Company techCompany;
-
 	techCompany.setBoss(boss);
-	techCompany.addEmployee(*senior);
-	techCompany.addEmployee(*mid);
-	techCompany.addEmployee(*junior);
-	techCompany.addEmployee(*intern);
-	techCompany.addEmployee(*tester);
-	
-	delete boss;
-	delete senior;
-	delete mid;
-	delete junior;
-	delete intern;
-	
+	techCompany.addEmployee(senior);
+	techCompany.addEmployee(mid);
+	techCompany.addEmployee(junior);
+	techCompany.addEmployee(intern);
+	techCompany.addEmployee(tester);
 	techCompany.printAll();
 
-	std::cout << "Total work: ";
-	std::cout << techCompany.getTotalWork();
-
+	std::cout << "Employees working... \n";
+	std::cout << "Sum ~ " << techCompany.getTotalWork() << "\n";
 	return 0;
 }

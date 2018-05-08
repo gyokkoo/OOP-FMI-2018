@@ -1,11 +1,9 @@
 #include <iostream>
 #include "Company.h"
 
-Company::Company(int capacity)
+Company::Company()
 {
-	this->allocate(capacity);
-	this->capacity = capacity;
-	this->count = 0;
+	this->boss = nullptr;
 }
 
 Company::Company(const Company& other)
@@ -32,9 +30,10 @@ Company::~Company()
 double Company::getTotalWork() const
 {
 	double totalWork = 0;
-	for (int i = 0; i < this->count; i++)
+	int size = this->employees.size();
+	for (int i = 0; i < size; i++)
 	{
-		totalWork += this->employees[i].work();
+		totalWork += this->employees[i]->work();
 	}
 
 	if (this->boss->getExperience() < 2)
@@ -51,47 +50,42 @@ double Company::getTotalWork() const
 
 void Company::setBoss(Manager* boss)
 {
-	Manager* bossCopy(boss);
+	Manager* bossCopy = boss;
 	this->boss = bossCopy;
 }
 
-void Company::operator+=(const Employee& newEmployee)
+void Company::operator+=(Employee* newEmployee)
 {
 	addEmployee(newEmployee);
 }
 
-void Company::addEmployee(const Employee& newEmployee)
+void Company::addEmployee(Employee* newEmployee)
 {
-	if (this->count >= this->capacity)
-	{
-		this->resize(this->count * 2);
-	}
-
-	this->employees[this->count] = newEmployee;
-	this->count++;
+	this->employees.push_back(newEmployee);
 }
 
 void Company::removeEmployee(int index)
 {
-	if (index < 0 || index >= this->count)
+	int size = this->employees.size();
+	if (index < 0 || index >= size)
 	{
 		std::cout << "Invalid index!\n";
 		return;
 	}
 
-	this->count--;
-	for (int i = index; i < this->count; ++i)
-	{
-		this->employees[i] = this->employees[i + 1];
-	}
+	Employee* employeeToRemove = this->employees[index];
+	this->employees.erase(this->employees.begin() + index);
+	
+	delete employeeToRemove;
 }
 
 double Company::getTotalExpenses() const
 {
 	double total = 0;
-	for (int i = 0; i < this->count; ++i)
+	int size = this->employees.size();
+	for (int i = 0; i < size; ++i)
 	{
-		total += this->employees[i].getSalary();
+		total += this->employees[i]->getSalary();
 	}
 
 	return total;
@@ -99,14 +93,15 @@ double Company::getTotalExpenses() const
 
 double Company::getAverageSalary() const
 {
-	return this->getTotalExpenses() / this->count;
+	return this->getTotalExpenses() / this->employees.size();
 }
 
 void Company::removeNewEmployees()
 {
-	for (int i = 0; i < this->count; ++i)
+	int size = this->employees.size();
+	for (int i = 0; i < size; ++i)
 	{
-		if (this->employees[i].getExperience() < 3)
+		if (this->employees[i]->getExperience() < 3)
 		{
 			this->removeEmployee(i);
 			i--;
@@ -116,52 +111,44 @@ void Company::removeNewEmployees()
 
 void Company::printAll() const
 {
-	if (this->count == 0)
+	if (this->employees.size() == 0)
 	{
 		std::cout << "No employees!\n";
 		return;
 	}
-
-	std::cout << "All employees in the company:\n";
-	for (int i = 0; i < this->count; ++i)
+	
+	if (this->boss == nullptr)
 	{
-		this->employees[i].print();
+		std::cout << "No boss!\n";
+	}
+	else 
+	{
+		this->boss->print();
+	}
+	std::cout << "\nAll employees in the company:\n";
+	int size = this->employees.size();
+	for (int i = 0; i < size; ++i)
+	{
+		this->employees[i]->print();
 		std::cout << "______________________\n";
 	}
 }
 
 void Company::clear()
 {
-	delete[] this->employees;
-	this->employees = nullptr;
-	this->capacity = 0;
-	this->count = 0;
+	delete[] this->boss;
+	this->boss = nullptr;
+	int size = this->employees.size();
+	for (int i = 0; i < size; i++)
+	{
+		delete employees[i];
+	}
 }
 
 void Company::copyFrom(const Company& other)
 {
-	this->capacity = other.capacity;
-	this->count = other.count;
-	this->allocate(other.capacity);
-	for (int i = 0; i < other.count; ++i)
-	{
-		this->employees[i] = other.employees[i];
-	}
-}
-
-void Company::resize(int newCapacity)
-{
-	Employee* temp = this->employees;
-	this->allocate(newCapacity);
-	this->capacity = newCapacity;
-	for (int i = 0; i < this->count; ++i)
-	{
-		this->employees[i] = temp[i];
-	}
-	delete[] temp;
-}
-
-void Company::allocate(int count)
-{
-	this->employees = new Employee[count];
+	this->boss = new Manager(*other.boss);
+	// copy container
+	std::vector<Employee*> newVector(other.employees.begin(), other.employees.end());
+	this->employees = newVector;
 }

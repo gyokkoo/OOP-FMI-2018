@@ -19,7 +19,7 @@ public:
 	void setExperience(int experience);
 	void setSalary(double salary);
 
-	void print() const;
+	virtual void print() const;
 protected:
 	virtual double getUsefulness(double moneyPerMonth);
 private:

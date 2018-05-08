@@ -11,6 +11,8 @@ public:
 	ITSpecialist& operator=(const ITSpecialist& rhs);
 	virtual ~ITSpecialist();
 
+	virtual double work();
+
 	void setProject(const char* project);
 	const char* getProject() const;
 
