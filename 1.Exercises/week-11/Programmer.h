@@ -12,7 +12,7 @@ public:
 	const char* getLanguages() const;
 	void setLanguages(const char* languages);
 
-	virtual Programmer* clone(const Programmer& other);
+	virtual Employee* clone();
 
 	virtual void print() const;
 private:

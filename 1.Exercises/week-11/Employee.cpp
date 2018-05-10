@@ -43,9 +43,9 @@ double Employee::work()
 	return 0.0;
 }
 
-Employee* Employee::clone(const Employee & other)
+Employee* Employee::clone()
 {
-	return new Employee(other);
+	return new Employee(*this);
 }
 
 const char* Employee::getName() const

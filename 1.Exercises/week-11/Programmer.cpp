@@ -38,9 +38,9 @@ void Programmer::setLanguages(const char* languages)
 	this->languages[length] = '\0';
 }
 
-Programmer* Programmer::clone(const Programmer & other)
+Employee* Programmer::clone()
 {
-	return new Programmer(other);
+	return new Programmer(*this);
 }
 
 

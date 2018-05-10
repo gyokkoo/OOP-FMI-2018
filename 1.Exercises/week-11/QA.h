@@ -9,7 +9,7 @@ public:
 	virtual ~QA();
 
 	virtual double work();
-	virtual QA* clone(const QA& other);
+	virtual Employee* clone();
 
 
 	void setIsManual(bool isManual);

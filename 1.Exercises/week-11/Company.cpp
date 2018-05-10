@@ -147,7 +147,7 @@ void Company::copyFrom(const Company& other)
 	for (int i = 0; i < size; ++i)
 	{
 		Employee* oldEmployee = other.employees[i];
-		Employee* newEmployee = oldEmployee->clone(*oldEmployee);
+		Employee* newEmployee = oldEmployee->clone();
 		newEmployees.push_back(newEmployee);
 	}
 

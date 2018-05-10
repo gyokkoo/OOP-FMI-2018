@@ -10,7 +10,7 @@ public:
 	virtual ~Employee();
 
 	virtual double work();
-	virtual Employee* clone(const Employee& other);
+	virtual Employee* clone();
 
 	const char* getName() const;
 	int getExperience() const;
