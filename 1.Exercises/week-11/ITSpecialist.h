@@ -16,9 +16,10 @@ public:
 	void setProject(const char* project);
 	const char* getProject() const;
 
-	virtual double getUsefulness(double moneyPerMonth);
 
 	virtual void print() const;
+protected:
+	double getUsefulness(double moneyPerMonth);
 private:
 	char* project;
 };

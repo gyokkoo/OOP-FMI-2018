@@ -10,6 +10,7 @@ public:
 	virtual ~Employee();
 
 	virtual double work();
+	virtual Employee* clone(const Employee& other);
 
 	const char* getName() const;
 	int getExperience() const;
@@ -20,8 +21,6 @@ public:
 	void setSalary(double salary);
 
 	virtual void print() const;
-protected:
-	double getUsefulness(double moneyPerMonth);
 private:
 	char* name;
 	int experience;

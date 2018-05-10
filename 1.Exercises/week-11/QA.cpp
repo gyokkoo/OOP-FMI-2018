@@ -23,6 +23,11 @@ double QA::work()
 	return usefulness;
 }
 
+QA* QA::clone(const QA & other)
+{
+	return new QA(other);
+}
+
 void QA::setIsManual(bool isManual)
 {
 	this->isManual = isManual;

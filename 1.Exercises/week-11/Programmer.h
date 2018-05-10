@@ -12,6 +12,8 @@ public:
 	const char* getLanguages() const;
 	void setLanguages(const char* languages);
 
+	virtual Programmer* clone(const Programmer& other);
+
 	virtual void print() const;
 private:
 	char languages[20];

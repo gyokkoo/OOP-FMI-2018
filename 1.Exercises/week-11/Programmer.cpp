@@ -38,6 +38,12 @@ void Programmer::setLanguages(const char* languages)
 	this->languages[length] = '\0';
 }
 
+Programmer* Programmer::clone(const Programmer & other)
+{
+	return new Programmer(other);
+}
+
+
 void Programmer::print() const
 {
 	std::cout << "Programmer: \n";

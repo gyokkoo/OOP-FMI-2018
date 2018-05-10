@@ -43,6 +43,11 @@ double Employee::work()
 	return 0.0;
 }
 
+Employee* Employee::clone(const Employee & other)
+{
+	return new Employee(other);
+}
+
 const char* Employee::getName() const
 {
 	return this->name;
@@ -91,20 +96,4 @@ void Employee::print() const
 	std::cout << "----Name: " << this->getName() << "\n";
 	std::cout << "----Experience: " << this->getExperience() << " months\n";
 	std::cout << "----Salary: " << this->getSalary() << " leva\n";
-}
-
-double Employee::getUsefulness(double moneyPerMonth)
-{
-	if (this->getExperience() < 6)
-	{
-		return 0;
-	}
-
-	double usefulness = this->getExperience() * moneyPerMonth;
-	if (this->getSalary() < 0.5 * usefulness)
-	{
-		usefulness = usefulness * 0.7;
-	}
-
-	return usefulness;
 }

@@ -142,6 +142,14 @@ void Company::copyFrom(const Company& other)
 {
 	this->boss = new Manager(*other.boss);
 	// copy container
-	std::vector<Employee*> newVector(other.employees.begin(), other.employees.end());
-	this->employees = newVector;
+	std::vector<Employee*> newEmployees;
+	int size = other.employees.size();
+	for (int i = 0; i < size; ++i)
+	{
+		Employee* oldEmployee = other.employees[i];
+		Employee* newEmployee = oldEmployee->clone(*oldEmployee);
+		newEmployees.push_back(newEmployee);
+	}
+
+	this->employees = newEmployees;
 }
