@@ -81,10 +81,13 @@ std::istream& operator>>(std::istream& is, TimestampWithDescription& timestamp)
 	// Casting to Timestamp and invoking operator>> for Timestamp class
 	is >> (Timestamp&)timestamp;
 
+	// Another way:
+	// operator>>(is, (Timestamp&)timestamp);
+	
 	std::cout << "Enter timestamp description: \n";
 	char buffer[1000];
-	// is.ignore();
-	is >> buffer;
+	is.ignore();
+	is.getline(buffer, 1000);
 
 	timestamp.setDescription(buffer);
 	return is;
@@ -96,6 +99,9 @@ std::ostream & operator<<(std::ostream & os, const TimestampWithDescription& tim
 
 	// Casting to Timestamp and invoking operator<< for Timestamp class
 	os << (const Timestamp&)timestamp;
+
+	// Another way
+	// operator<<(os, (Timestamp&)timestamp);
 
 	os << "Description: " << timestamp.getDescription() << "\n\n";
 	return os;
