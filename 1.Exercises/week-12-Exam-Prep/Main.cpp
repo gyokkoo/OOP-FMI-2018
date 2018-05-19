@@ -9,7 +9,7 @@ int main()
 	defaultTemperature.print();
 	Temperature temperatureA(15, 19, 26);
 	temperatureA.print();
-	Temperature temperatureB(15, 22, 26);
+	Temperature temperatureB(15, 19, 26);
 	temperatureB.print();
 
 	if (temperatureA == temperatureB)

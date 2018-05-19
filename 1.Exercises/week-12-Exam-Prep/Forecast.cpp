@@ -1,17 +1,19 @@
 #include <cstring>
 #include "Forecast.h"
 
-Forecast::Forecast() : Temperature(0, 0, 0), placeName(nullptr)
+Forecast::Forecast() : temperature(0, 0, 0), placeName(nullptr)
 {
 	this->setPlace("");
 }
 
-Forecast::Forecast(const char* place, const Temperature & temp) : Temperature(temp), placeName(nullptr)
+Forecast::Forecast(const char* place, const Temperature& temp) 
+	: temperature(temp), placeName(nullptr)
 {
 	this->setPlace(place);
 }
 
-Forecast::Forecast(const Forecast& other) : Temperature(other), placeName(nullptr)
+Forecast::Forecast(const Forecast& other) 
+	: temperature(other.getTemperature()), placeName(nullptr)
 {
 	this->setPlace(other.placeName);
 }
@@ -20,7 +22,7 @@ Forecast& Forecast::operator=(const Forecast& rhs)
 {
 	if (this != &rhs)
 	{
-		Temperature::operator=(rhs);
+		this->temperature = rhs.getTemperature();
 		this->setPlace(rhs.placeName);
 	}
 
@@ -44,7 +46,7 @@ const char* Forecast::getPlace() const
 
 const Temperature Forecast::getTemperature() const
 {
-	return Temperature(this->getMin(), this->getAvg(), this->getMax());
+	return this->temperature;
 }
 
 void Forecast::setPlace(const char* name)
@@ -61,6 +63,11 @@ void Forecast::setPlace(const char* name)
 	strcpy_s(this->placeName, length, name);
 }
 
+void Forecast::setTemperatures(int min, int avg, int max)
+{
+	this->temperature.setTemperatures(min, avg, max);
+}
+
 bool Forecast::updateIfHotter(const Forecast & f)
 {
 	// Check if place names are same
@@ -69,7 +76,10 @@ bool Forecast::updateIfHotter(const Forecast & f)
 		// Check if the given temperature is hotter
 		if (f.getTemperature() > this->getTemperature())
 		{
-			this->setTemperatures(f.getMin(), f.getAvg(), f.getMax());
+			int min = f.getTemperature().getMin();
+			int avg = f.getTemperature().getAvg();
+			int max = f.getTemperature().getMax();
+			this->temperature.setTemperatures(min, avg, max);
 			return true;
 		}
 	}
@@ -88,14 +98,14 @@ std::istream & operator>>(std::istream & is, Forecast & forecast)
 	std::cout << "Enter Min, Avg and Max temperatures:\n";
 	is >> min >> avg >> max;
 	forecast.setTemperatures(min, avg, max);
-
 	return is;
 }
 
 std::ostream& operator<<(std::ostream& os, const Forecast& forecast)
 {
 	os << "\nForecast in " << forecast.getPlace() << "\n";
-	os << "Min: " << forecast.getMin() << ", Avg: " << forecast.getAvg() << 
-		", Max: " << forecast.getMax() << "\n";
+	os << "Min: "    << forecast.getTemperature().getMin() 
+		<< ", Avg: " << forecast.getTemperature().getAvg() 
+		<< ", Max: " << forecast.getTemperature().getMax() << "\n";
 	return os;
 }
