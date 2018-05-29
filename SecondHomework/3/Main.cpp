@@ -82,15 +82,15 @@ int main()
 
 	Vehicle* audiA8 = new Car("Audi", "A8", Color::BLACK, 2009, 40000);
 	audiA8->details();
-	delete[] audiA8;
+	delete audiA8;
 
 	Vehicle* mercedesTruck = new Truck("Mercedes", "Actros 1844", Color::WHITE, 2008, 500000, 6);
 	mercedesTruck->details();
-	delete[] mercedesTruck;
+	delete mercedesTruck;
 
 	Vehicle* ducatiMotorcycle = new Motorcycle("Ducati", "Multistrada enduro", Color::BROWN, 2016, 100, "Touring");
 	ducatiMotorcycle->details();
-	delete[] ducatiMotorcycle;
+	delete ducatiMotorcycle;
 
 	return 0;
 }
