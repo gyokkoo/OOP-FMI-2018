@@ -11,7 +11,7 @@ public:
 	double getSize() const;
 	void setSize(int size);
 
-	virtual void details() const;
+	virtual void details() const override;
 private:
 	double size;
 };

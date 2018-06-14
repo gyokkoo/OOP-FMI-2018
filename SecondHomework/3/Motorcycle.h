@@ -13,7 +13,7 @@ public:
 	const char* getType() const;
 	void setType(const char* type);
 
-	virtual void details() const;
+	virtual void details() const override;
 private:
 	char* type;
 };

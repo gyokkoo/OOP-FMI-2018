@@ -88,7 +88,7 @@ int main()
 	mercedesTruck->details();
 	delete mercedesTruck;
 
-	Vehicle* ducatiMotorcycle = new Motorcycle("Ducati", "Multistrada enduro", Color::BROWN, 2016, 100, "Touring");
+	Vehicle* ducatiMotorcycle = new Motorcycle("Ducati", "Multistrada enduro", Color::GREY, 2016, 100, "Touring");
 	ducatiMotorcycle->details();
 	delete ducatiMotorcycle;
 

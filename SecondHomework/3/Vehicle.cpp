@@ -16,7 +16,7 @@ Vehicle::Vehicle(const char* make, const char* model, Color color, int year, int
 	this->setMileage(mileage);
 }
 
-Vehicle::Vehicle(const Vehicle& other)
+Vehicle::Vehicle(const Vehicle& other) : make(nullptr), model(nullptr)
 {
 	this->copyFrom(other);
 }
