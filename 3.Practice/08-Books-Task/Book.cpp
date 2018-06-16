@@ -2,6 +2,48 @@
 #include <cstring>
 #include "Book.h"
 
+Book::Book() : title(nullptr), pages(0)
+{
+}
+
+Book::Book(const char* title, int pages) : title(nullptr), pages(0)
+{
+	this->setTitle(title);
+	this->setPages(pages);
+}
+
+Book::Book(const Book& other) : title(nullptr), pages(0)
+{
+	this->setTitle(other.title);
+	this->setPages(other.pages);
+}
+
+Book& Book::operator=(const Book& rhs)
+{
+	if (this != &rhs)
+	{
+		this->setTitle(rhs.title);
+		this->setPages(rhs.pages);
+	}
+
+	return *this;
+}
+
+Book::~Book()
+{
+	delete[] this->title;
+}
+
+bool Book::operator<(const Book& rhs)
+{
+	return strcmp(this->title, rhs.title) < 0 ? true : false;
+}
+
+bool Book::operator>(const Book & rhs)
+{
+	return strcmp(this->title, rhs.title) > 0 ? true : false;
+}
+
 void Book::setTitle(const char* title)
 {
 	if (title == nullptr)
@@ -20,7 +62,7 @@ void Book::setTitle(const char* title)
 	}
 }
 
-void Book::setPage(int pages)
+void Book::setPages(int pages)
 {
 	if (pages < 0)
 	{
@@ -45,4 +87,29 @@ const char* Book::getTitle() const
 int Book::getPages() const
 {
 	return this->pages;
+}
+
+std::istream & operator>>(std::istream & is, Book & book)
+{
+	const int maxSize = 100;
+	char buffer[maxSize + 1];
+	int pages = 0;
+
+	std::cout << "Enter book title: ";
+	is.getline(buffer, maxSize);
+	book.setTitle(buffer);
+
+	std::cout << "Enter pages count: ";
+	is >> pages;
+	book.setPages(pages);
+
+	return is;
+}
+
+std::ostream & operator<<(std::ostream & os, const Book & book)
+{
+	os << "Book title: " << book.getTitle() << "\n"
+		<< "Total pages: " << book.getPages() << "\n";
+
+	return os;
 }
