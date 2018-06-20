@@ -6,13 +6,13 @@ Book::Book() : title(nullptr), pages(0)
 {
 }
 
-Book::Book(const char* title, int pages) : title(nullptr), pages(0)
+Book::Book(const char* title, int pages) : Book()
 {
 	this->setTitle(title);
 	this->setPages(pages);
 }
 
-Book::Book(const Book& other) : title(nullptr), pages(0)
+Book::Book(const Book& other) : Book()
 {
 	this->setTitle(other.title);
 	this->setPages(other.pages);
@@ -91,7 +91,7 @@ int Book::getPages() const
 
 std::istream & operator>>(std::istream & is, Book & book)
 {
-	const int maxSize = 100;
+	const int maxSize = 200;
 	char buffer[maxSize + 1];
 	int pages = 0;
 
