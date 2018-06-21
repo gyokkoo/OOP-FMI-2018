@@ -1,15 +1,14 @@
 #pragma once
-#include <iostream>
 #include <vector>
-
-#include "Constant.h"
 #include "MathExpression.h"
 
+const int MAX_LENGTH = 10;
+
 template<typename T>
-class Max : public MathExpression<T>
+class Average : public MathExpression<T>
 {
 public:
-	Max();
+	Average();
 
 	virtual MathExpression<T>* clone() const override;
 
@@ -21,33 +20,35 @@ private:
 };
 
 template<typename T>
-inline Max<T>::Max()
+inline Average<T>::Average()
 {
 }
 
 template<typename T>
-inline MathExpression<T>* Max<T>::clone() const
+inline MathExpression<T>* Average<T>::clone() const
 {
-	return new Max<T>(*this);
+	return new Average<T>(*this);
 }
 
 template<typename T>
-inline T Max<T>::value() const
+inline T Average<T>::value() const
 {
-	T max = 0;
+	if (this->expressions.size() == 0)
+	{
+		return 0;
+	}
+	
+	T sum = 0;
 	for (size_t i = 0; i < this->expressions.size(); i++)
 	{
-	 	if (this->expressions[i]->value() > max)
-	 	{
-	 		max = this->expressions[i]->value();
-	 	}
+		sum += this->expressions[i]->value();
 	}
 
-	return max;
+	return sum / this->expressions.size();
 }
 
 template<typename T>
-inline void Max<T>::addExpression(MathExpression<T>* expression)
+inline void Average<T>::addExpression(MathExpression<T>* expression)
 {
 	if (this->expressions.size() >= MAX_LENGTH)
 	{
@@ -55,5 +56,5 @@ inline void Max<T>::addExpression(MathExpression<T>* expression)
 		return;
 	}
 
-	expressions.push_back(expression);
+	this->expressions.push_back(expression);
 }
