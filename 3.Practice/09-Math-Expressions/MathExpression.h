@@ -1,4 +1,7 @@
 #pragma once
+#include <iostream>
+
+const int MAX_LENGTH = 10;
 
 template<typename T>
 class MathExpression

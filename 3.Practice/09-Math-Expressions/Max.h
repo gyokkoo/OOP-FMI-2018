@@ -10,6 +10,9 @@ class Max : public MathExpression<T>
 {
 public:
 	Max();
+	Max(const Max<T>& other);
+	Max<T>& operator=(const Max<T>& rhs);
+	~Max();
 
 	virtual MathExpression<T>* clone() const override;
 
@@ -17,12 +20,42 @@ public:
 
 	virtual void addExpression(MathExpression<T>* expression);
 private:
+	void clear();
+	void copyFrom(const Max<T>& other);
+private:
 	std::vector<MathExpression<T>*> expressions;
 };
 
 template<typename T>
 inline Max<T>::Max()
 {
+}
+
+template<typename T>
+inline Max<T>::Max(const Max<T>& other)
+{
+	for (size_t i = 0; i < other.expressions.size(); i++)
+	{
+		this->expressions.push_back(other.expressions[i]->clone());
+	}
+}
+
+template<typename T>
+inline Max<T>& Max<T>::operator=(const Max<T>& rhs)
+{
+	if (this != &rhs)
+	{
+		this->clear();
+		this->copyFrom(rhs);
+	}
+
+	return *this;
+}
+
+template<typename T>
+inline Max<T>::~Max()
+{
+	this->clear();
 }
 
 template<typename T>
@@ -55,5 +88,23 @@ inline void Max<T>::addExpression(MathExpression<T>* expression)
 		return;
 	}
 
-	expressions.push_back(expression);
+	expressions.push_back(expression->clone());
+}
+
+template<typename T>
+inline void Max<T>::clear()
+{
+	for (size_t i = 0; i < this->expressions.size(); i++)
+	{
+		delete this->expressions[i];
+	}
+}
+
+template<typename T>
+inline void Max<T>::copyFrom(const Max<T>& other)
+{
+	for (size_t i = 0; i < rhs.expressions.size(); i++)
+	{
+		this->expressions.push_back(rhs.expressions[i]->clone());
+	}
 }

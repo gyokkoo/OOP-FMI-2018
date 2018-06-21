@@ -11,7 +11,6 @@ public:
 	virtual MathExpression<T>* clone() const override;
 
 	virtual T value() const override;
-
 private:
 	T val;
 };

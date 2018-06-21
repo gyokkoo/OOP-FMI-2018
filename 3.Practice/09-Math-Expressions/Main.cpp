@@ -27,11 +27,20 @@ int main()
 	Prod<int>* product = new Prod<int>(max, average);
 	product->print();
 
+	Max<int> copyMax(*max);
+	Max<int> assignmentMax = copyMax;
+	assignmentMax.print();
+
+	Average<int> copyAverage(*average);
+	Average<int> assignmentAvg = copyAverage;
+	assignmentAvg.print();
+
 	delete numberFive;
 	delete numberTen;
+	delete max;
 	delete average;
 	delete sum;
 	delete product;
-	
+
 	return 0;
 }

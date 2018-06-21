@@ -10,7 +10,7 @@ public:
 
 	virtual MathExpression<T>* clone() const override;
 
-	T value() const;
+	virtual T value() const override;
 private:
 	T val;
 };
