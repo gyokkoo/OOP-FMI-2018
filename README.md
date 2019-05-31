@@ -1,5 +1,3 @@
-# OOP-FMI-2017 Learning repository
-
 # *Looking for contributors to keep this repo up to date!*
 
 Lectures, Tasks and Solutions for Object-Oriented Programming course at FMI 2018, Software Engineering
